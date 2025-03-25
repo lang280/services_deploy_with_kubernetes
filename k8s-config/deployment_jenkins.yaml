@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins  # Deployment的名字，用于在Kubernetes内部唯一标识这个Deployment资源。
+spec:
+  replicas: 1  # 指定期望的Pod副本数量为2。
+  selector:
+    matchLabels:
+      app: jenkins  # 选择器，用于找到应该由此Deployment管理的Pod。只有标签匹配此处定义的Pod会被管理。
+  template:
+    metadata:
+      labels:
+        app: jenkins  # Pod模板的标签，确保创建的Pod被上面的selector正确选择。
+    spec:
+      containers:
+      - name: container1  # 容器的名称，在Pod内必须唯一。
+        #image: henrylong280/my-custom-jenkins  # 容器使用的镜像
+        image: jenkins/jenkins:lts  # 容器使用的镜像, 需要到pod的log里翻安装密码

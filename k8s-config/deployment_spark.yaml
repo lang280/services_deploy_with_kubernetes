@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark  # Deployment的名字，用于在Kubernetes内部唯一标识这个Deployment资源。
+spec:
+  replicas: 1  # 指定期望的Pod副本数量为2。
+  selector:
+    matchLabels:
+      app: spark  # 选择器，用于找到应该由此Deployment管理的Pod。只有标签匹配此处定义的Pod会被管理。
+  template:
+    metadata:
+      labels:
+        app: spark  # Pod模板的标签，确保创建的Pod被上面的selector正确选择。
+    spec:
+      containers:
+      - name: container1  # 容器的名称，在Pod内必须唯一
+        image: apache/spark  # 容器使用的镜像
+        args: ["/opt/spark/bin/spark-shell"] # docker run命令时紧跟在镜像名称后面指定的命令行参数
+        stdin: true # 必须要添加, 来模仿docker run -i, 否则容器会立即退出
